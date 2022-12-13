@@ -1,3 +1,8 @@
-const height = 20
-const width = 10
+const COLS = 10;
+const ROWS = 20;
 
+let board = new Board()
+
+function play() {
+    
+}
