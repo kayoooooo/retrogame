@@ -1,13 +1,20 @@
-const COLS = 10;
 const ROWS = 20;
+const COLS = 10;
+const BLOCK_SIZE = 30;
+
+const canvas = document.getElementById("board");
+const context = canvas.getContext("2d");
+
+context.canvas.width = COLS * BLOCK_SIZE;
+context.canvas.height = ROWS * BLOCK_SIZE;
+
+context.scale(BLOCK_SIZE, BLOCK_SIZE);
 
 let board = new Board()
 
 function play() {
     
 }
-const height = 20
-const width = 10
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
