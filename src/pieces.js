@@ -1,4 +1,4 @@
-class Piece {
+export class Piece {
 
     colors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"]
     shapes = [[[0,0,0,0], [1,1,1,1], [0,0,0,0],[0,0,0,0]], 
