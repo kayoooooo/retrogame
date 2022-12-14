@@ -10,11 +10,11 @@ context.canvas.height = ROWS * BLOCK_SIZE;
 
 context.scale(BLOCK_SIZE, BLOCK_SIZE);
 
-/*
-let board = new Board()
+let board = new Board();
 
 function play() {
-    
+    board.reset();
+    console.table(board.grid);
 }
 
 function shuffle(array) {
@@ -25,4 +25,4 @@ function shuffle(array) {
 }
 
 queue = []
-queue.append(shuffle([1,2,3,4,5,6,7]))*/
+queue.append(shuffle([1,2,3,4,5,6,7]))

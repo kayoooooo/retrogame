@@ -16,3 +16,10 @@
 .game-board {
     border: solid 2px;
 }
+
+.play-button {
+    background-color: #4caf50;
+    font-size: 18px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
