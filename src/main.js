@@ -25,7 +25,7 @@ function shuffle(array) {
 var queue = []
 queue.push(shuffle([1,2,3,4,5,6,7]))
 
-function play() {
+function play(){
     board.reset();
     let piece = new Piece(queue[0]);
     piece.draw();
