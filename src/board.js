@@ -1,4 +1,4 @@
-class Board {
+export class Board {
 
     // reset the board when a new game is started
     reset() {
