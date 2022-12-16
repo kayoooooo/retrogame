@@ -52,6 +52,7 @@ export class Board {
     
         // Reverse the order of the columns.
         p.shape.forEach(row => row.reverse());
+        console.log(p);
         return p;
     }
     
