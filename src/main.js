@@ -7,6 +7,8 @@ const context = canvas.getContext("2d");
 let board = new Board();
 
 var time;
+let requestId;
+
 
 context.canvas.width = board.COLS * board.BLOCK_SIZE;
 context.canvas.height = board.ROWS * board.BLOCK_SIZE;
@@ -20,7 +22,6 @@ function shuffle(array) {
     }
     return array
 }
-
 
 function animate(now = 0) {
     // Update elapsed time.  
