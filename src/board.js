@@ -1,3 +1,5 @@
+import {moves, KEY} from "./main.js"
+
 export class Board {
 
     ROWS = 20;
@@ -52,9 +54,26 @@ export class Board {
     
         // Reverse the order of the columns.
         p.shape.forEach(row => row.reverse());
-        console.log(p);
         return p;
     }
+
+    drop() {
+        let p = moves[KEY.DOWN](this.piece);
+        if (this.valid(p)) {
+          this.piece.move(p);
+        } else {
+          this.freeze();
+          this.clearLines();
+          if (this.piece.y === 0) {
+            return false;
+          }
+          this.piece = this.next;
+          this.piece.ctx = this.ctx;
+          this.piece.setStartingPosition();
+          this.getNewPiece();
+        }
+        return true;
+      }
     
     freeze() {
         this.piece.shape.forEach((row, y) => {
@@ -64,5 +83,14 @@ export class Board {
             }
           });
         });
+    }
+
+    clearLines() {
+        this.board.forEach((row, y) => {    
+            if (row.every(value => value !== 0)) {    
+                this.board.splice(y, 1); 
+                this.board.unshift(Array(COLS).fill(0));
+            }  
+        });  
     }
 }

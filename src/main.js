@@ -6,6 +6,7 @@ const context = canvas.getContext("2d");
 
 let board = new Board();
 
+var time;
 
 context.canvas.width = board.COLS * board.BLOCK_SIZE;
 context.canvas.height = board.ROWS * board.BLOCK_SIZE;
@@ -21,9 +22,27 @@ function shuffle(array) {
 }
 
 
+function animate(now = 0) {
+    // Update elapsed time.  
+    time.elapsed = now - time.start;
+    
+    // If elapsed time has passed time for current level  
+    if (time.elapsed > time.level) {
+    
+      // Restart counting from now
+      time.start = now;   
+      
+      board.drop();  
+    }
+    
+    // Clear board before drawing new state.
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
+    board.piece.draw()
+    board.drawBoard();  
+    requestId = requestAnimationFrame(animate);
+  }
 
-
-const KEY = {
+export const KEY = {
     LEFT: 37,
     RIGHT: 39,
     DOWN: 40,
@@ -32,7 +51,7 @@ const KEY = {
 }
 Object.freeze(KEY);
 
-const moves = {
+export const moves = {
     [KEY.LEFT]:  p => ({ ...p, x: p.x - 1 }),
     [KEY.RIGHT]: p => ({ ...p, x: p.x + 1 }),
     [KEY.DOWN]: p => ({ ...p, y: p.y + 1 }),
@@ -70,11 +89,14 @@ document.addEventListener('keydown', event => {
 function play(){
     var queue = []
     queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
+    time = { start: 0, elapsed: 0, level: 1000 };
     board.reset();
+    time.start = performance.now();
     let piece = new Piece(context, queue[0] - 1);
     board.piece = piece;
     piece.draw();
     board.drawBoard();
+    animate();
     if (queue.length <= 6) {
         queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
     }
