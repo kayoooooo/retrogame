@@ -20,9 +20,9 @@ export class Board {
             let x = p.x + dx;
             let y = p.y + dy;
             return (
-              this.isEmpty(value) ||
-             (this.insideWalls(x) &&
-              this.aboveFloor(y)
+              value == 0 ||
+             (0 <= x && this.COLS - 1 >= x && 
+              0 <= y && this.ROWS - 1 >= y
             ))
           });
         });

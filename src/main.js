@@ -21,20 +21,21 @@ function shuffle(array) {
 }
 
 
-var queue = []
-queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
+
 
 const KEY = {
     LEFT: 37,
     RIGHT: 39,
-    DOWN: 40
+    DOWN: 40,
+    SPACE: 32
 }
 Object.freeze(KEY);
 
 const moves = {
     [KEY.LEFT]:  p => ({ ...p, x: p.x - 1 }),
     [KEY.RIGHT]: p => ({ ...p, x: p.x + 1 }),
-    [KEY.DOWN]:    p => ({ ...p, y: p.y + 1 })
+    [KEY.DOWN]:    p => ({ ...p, y: p.y + 1 }),
+    [KEY.SPACE]: p => ({ ...p, y: p.y + 1 })
 };
 
 document.addEventListener('keydown', event => {
@@ -50,19 +51,30 @@ document.addEventListener('keydown', event => {
         board.piece.move(p);
         
         // Clear old position before drawing.
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); 
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
         
         board.piece.draw();
+      }
+      if (event.keyCode === KEY.SPACE) {
+        // Hard drop
+        while (board.valid(p)) {
+          board.piece.move(p);   
+          p = moves[KEY.DOWN](board.piece);
+        }
       }
     }
 });
 
 function play(){
+    var queue = []
+    queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
     board.reset();
     let piece = new Piece(context, queue[0] - 1);
     piece.draw();
-    console.log(piece.shape)
     board.piece = piece;
+    if (queue.length <= 6) {
+        queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
+    }
 }
 
 document.querySelector("#play").onclick = play;
