@@ -28,6 +28,7 @@ function play(){
     board.reset();
     let piece = new Piece(context, queue[0] - 1);
     piece.draw();
+    console.log(piece.shape)
     board.piece = piece;
 }
 

@@ -12,6 +12,8 @@ export class Piece {
         this.ctx = ctx
         this.color = colors[q]
         this.shape = shapes[q]
+        this.x = 3
+        this.y = 0
     }
     
     draw() {
