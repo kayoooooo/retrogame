@@ -31,4 +31,4 @@ function play(){
     board.piece = piece;
 }
 
-document.querySelector("#play").onclick = play;
+document.querySelector("#play").onclick = play();
