@@ -8,12 +8,15 @@ const shapes = [[[0,0,0,0], [1,1,1,1], [0,0,0,0],[0,0,0,0]],
 [[7,7,0], [0,7,7], [0,0,0]]
 ]
 export class Piece {
-    constructor(ctx, q) {
+    constructor(ctx, q, s) {
         this.ctx = ctx
         this.color = colors[q]
         this.shape = shapes[q]
         this.x = 3
         this.y = 0
+        if (s == 1) {
+          this.color = "black"
+        }
     }
     
     draw() {

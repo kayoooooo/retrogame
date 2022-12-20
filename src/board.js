@@ -7,6 +7,7 @@ export class Board {
     COLS = 10;
     BLOCK_SIZE = 30;
     queue = [].concat(shuffle([1,2,3,4,5,6,7]))
+    spec = [0,0,0,0,0,0,1]
 
     constructor(ctx) {
         this.ctx = ctx;
@@ -25,7 +26,7 @@ export class Board {
         this.piece = new Piece(this.ctx, this.queue[0] - 1);
     } 
     getNewPiece() {
-        this.piece = new Piece(this.ctx, this.queue[0] - 1);
+        this.piece = new Piece(this.ctx, this.queue[0] - 1, this.spec[0]);
     }
 
     createEmptyBoard() {
@@ -85,10 +86,12 @@ export class Board {
                 return false;
             }
             this.queue.shift();
+            this.spec.shift();
             this.piece.ctx = this.ctx;
             this.getNewPiece();
             if (this.queue.length <= 6) {
                 this.queue = this.queue.concat(shuffle([1,2,3,4,5,6,7]))
+                this.spec = this.spec.concat(shuffle([0,0,0,0,0,0,1]))
             }
         }
         return true;
