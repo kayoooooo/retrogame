@@ -53,7 +53,7 @@ export class Board {
               value == 0 ||
              (0 <= x && this.COLS - 1 >= x && 
               0 <= y && this.ROWS - 1 >= y
-            ))
+            && (this.grid[y] && this.grid[y][x] === 0)))
           });
         });
     }
