@@ -117,27 +117,8 @@ export class Board {
           this.grid.splice(y, 1);
   
           // Add zero filled row at the top.
-          this.grid.unshift(Array(COLS).fill(0));
+          this.grid.unshift(Array(this.COLS).fill(0));
         }
       });
-      
-      if (lines > 0) {
-        // Calculate points from cleared lines and level.
-  
-        account.score += this.getLinesClearedPoints(lines);
-        account.lines += lines;
-  
-        // If we have reached the lines for next level
-        if (account.lines >= LINES_PER_LEVEL) {
-          // Goto next level
-          account.level++;  
-          
-          // Remove lines so we start working for the next level
-          account.lines -= LINES_PER_LEVEL;
-  
-          // Increase speed of game
-          time.level = LEVEL[account.level];
-        }
-      }
     }
 }
