@@ -1,5 +1,5 @@
 import {moves, KEY, shuffle} from "./main.js"
-import {Piece} from "./pieces.js"
+import {Piece, colors} from "./pieces.js"
 
 export class Board {
 
@@ -37,7 +37,7 @@ export class Board {
         this.grid.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value > 0) {
-            this.ctx.fillStyle = this.piece.color;
+            this.ctx.fillStyle = colors[value - 1];
             this.ctx.fillRect(x, y, 1, 1);
             }
         });
