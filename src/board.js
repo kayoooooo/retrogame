@@ -1,26 +1,43 @@
-import {moves, KEY} from "./main.js"
+import {moves, KEY, shuffle} from "./main.js"
+import {Piece} from "./pieces.js"
 
 export class Board {
 
     ROWS = 20;
     COLS = 10;
     BLOCK_SIZE = 30;
+    queue = [].concat(shuffle([1,2,3,4,5,6,7]))
 
-    // reset the board when a new game is started
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.init();
+    }
+
+    init() {
+        this.ctx.canvas.width = this.COLS * this.BLOCK_SIZE;
+        this.ctx.canvas.height = this.ROWS * this.BLOCK_SIZE;
+        this.ctx.scale(this.BLOCK_SIZE, this.BLOCK_SIZE);
+    }
+
     reset() {
         this.grid = this.createEmptyBoard();
+        this.queue = [].concat(shuffle([1,2,3,4,5,6,7]))
+        this.piece = new Piece(this.ctx, this.queue[0] - 1);
     } 
+    getNewPiece() {
+        this.piece = new Piece(this.ctx, this.queue[0] - 1);
+    }
 
-    // create matrix filled with zeros 
     createEmptyBoard() {
         return Array.from({length: this.ROWS}, () => Array(this.COLS).fill(0));
     }
 
     drawBoard() {
+        this.piece.draw()
         this.grid.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value > 0) {
-            this.ctx.fillStyle = COLORS[value];
+            this.ctx.fillStyle = this.piece.color;
             this.ctx.fillRect(x, y, 1, 1);
             }
         });
@@ -62,15 +79,17 @@ export class Board {
         if (this.valid(p)) {
           this.piece.move(p);
         } else {
-          this.freeze();
-          this.clearLines();
-          if (this.piece.y === 0) {
-            return false;
-          }
-          this.piece = this.next;
-          this.piece.ctx = this.ctx;
-          this.piece.setStartingPosition();
-          this.getNewPiece();
+            this.freeze();
+            this.clearLines();
+            if (this.piece.y === 0) {
+                return false;
+            }
+            this.queue.shift();
+            this.piece.ctx = this.ctx;
+            this.getNewPiece();
+            if (this.queue.length <= 6) {
+                this.queue = this.queue.concat(shuffle([1,2,3,4,5,6,7]))
+            }
         }
         return true;
       }

@@ -1,21 +1,14 @@
 import {Board} from "./board.js" 
-import {Piece} from "./pieces.js"
 
 const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
 
-let board = new Board();
+let board = new Board(context);
 
 var time;
 let requestId;
 
-
-context.canvas.width = board.COLS * board.BLOCK_SIZE;
-context.canvas.height = board.ROWS * board.BLOCK_SIZE;
-
-context.scale(board.BLOCK_SIZE, board.BLOCK_SIZE);
-
-function shuffle(array) {
+export function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -38,7 +31,6 @@ function animate(now = 0) {
     
     // Clear board before drawing new state.
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
-    board.piece.draw()
     board.drawBoard();  
     requestId = requestAnimationFrame(animate);
   }
@@ -88,19 +80,11 @@ document.addEventListener('keydown', event => {
 });
 
 function play(){
-    var queue = []
-    queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
     time = { start: 0, elapsed: 0, level: 1000 };
     board.reset();
     time.start = performance.now();
-    let piece = new Piece(context, queue[0] - 1);
-    board.piece = piece;
-    piece.draw();
     board.drawBoard();
     animate();
-    if (queue.length <= 6) {
-        queue = queue.concat(shuffle([1,2,3,4,5,6,7]))
-    }
 }
 
 document.querySelector("#play").onclick = play;
