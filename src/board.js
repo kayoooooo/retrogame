@@ -85,7 +85,9 @@ export class Board {
                 this.piece.shape.forEach((row, y) => {
                     row.forEach((value, x) => {
                     if (value > 0) {
-                        this.grid[this.piece.y + 1 + y][this.piece.x + x] = 0;
+                        if (this.piece.y + 1 + y < this.ROWS) {
+                          this.grid[this.piece.y + 1 + y][this.piece.x + x] = 0;
+                        }
                         this.grid[this.piece.y - 1 + y][this.piece.x + x] = 0;
                         this.grid[this.piece.y + y][this.piece.x + 1 + x] = 0;
                         this.grid[this.piece.y + y][this.piece.x - 1 + x] = 0;
