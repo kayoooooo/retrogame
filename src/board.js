@@ -23,6 +23,7 @@ export class Board {
     reset() {
         this.grid = this.createEmptyBoard();
         this.queue = [].concat(shuffle([1,2,3,4,5,6,7]))
+        this.spec = [0,0,0,0,0,0,1]
         this.piece = new Piece(this.ctx, this.queue[0] - 1);
     } 
     getNewPiece() {
@@ -80,6 +81,18 @@ export class Board {
         if (this.valid(p)) {
           this.piece.move(p);
         } else {
+            if (this.piece.color == "black") {
+                this.piece.shape.forEach((row, y) => {
+                    row.forEach((value, x) => {
+                    if (value > 0) {
+                        this.grid[this.piece.y + 1 + y][this.piece.x + x] = 0;
+                        this.grid[this.piece.y - 1 + y][this.piece.x + x] = 0;
+                        this.grid[this.piece.y + y][this.piece.x + 1 + x] = 0;
+                        this.grid[this.piece.y + y][this.piece.x - 1 + x] = 0;
+                    }
+                    });
+                });
+            }
             this.freeze();
             this.clearLines();
             if (this.piece.y === 0) {
