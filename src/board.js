@@ -22,10 +22,13 @@ export class Board {
 
     reset() {
         this.grid = this.createEmptyBoard();
+        this.lines = 0;
+        document.getElementById("lines").innerHTML = this.lines;
         this.queue = [].concat(shuffle([1,2,3,4,5,6,7]))
         this.spec = [0,0,0,0,0,0,1]
         this.piece = new Piece(this.ctx, this.queue[0] - 1);
     } 
+
     getNewPiece() {
         this.piece = new Piece(this.ctx, this.queue[0] - 1, this.spec[0]);
     }
@@ -54,8 +57,8 @@ export class Board {
             return (
               value == 0 ||
              (0 <= x && this.COLS - 1 >= x && 
-              0 <= y && this.ROWS - 1 >= y
-            && (this.grid[y] && this.grid[y][x] === 0)))
+              0 <= y && this.ROWS - 1 >= y)
+            && (this.grid[y] && this.grid[y][x] === 0))
           });
         });
     }
@@ -123,16 +126,16 @@ export class Board {
     }
 
     clearLines() {
-      let lines = 0;
   
       this.grid.forEach((row, y) => {
   
         // If every value is greater than 0.
         if (row.every(value => value > 0)) {
-          lines++;
   
           // Remove the row.
           this.grid.splice(y, 1);
+          this.lines++;
+          document.getElementById("lines").innerHTML = this.lines;
   
           // Add zero filled row at the top.
           this.grid.unshift(Array(this.COLS).fill(0));
